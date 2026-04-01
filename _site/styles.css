@@ -443,7 +443,7 @@ h3 {
 
 .ai-flowchart-branches {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.9rem;
   margin-top: 1rem;
 }
@@ -453,6 +453,12 @@ h3 {
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(226, 232, 240, 0.98);
   border-radius: 16px;
+}
+
+.ai-flow-branch-all {
+  background:
+    radial-gradient(circle at top right, rgba(219, 234, 254, 0.65), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.94) 100%);
 }
 
 .ai-flow-branch-head {
@@ -476,6 +482,47 @@ h3 {
   font-weight: 600;
 }
 
+.ai-flow-branch-meta-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.ai-flow-summary-total {
+  color: var(--ink-strong);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.ai-flow-summary-breakdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ai-flow-summary-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  padding: 0.16rem 0.48rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.ai-flow-summary-pill-k {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.ai-flow-summary-pill-s {
+  background: #dcfce7;
+  color: #166534;
+}
+
 .ai-flow-tags {
   display: flex;
   flex-wrap: wrap;
@@ -496,15 +543,46 @@ h3 {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
+.ai-flow-tag-k {
+  background: rgba(239, 246, 255, 0.9);
+  border-color: #bfdbfe;
+}
+
+.ai-flow-tag-s {
+  background: rgba(240, 253, 244, 0.92);
+  border-color: #bbf7d0;
+}
+
 .ai-flow-tag strong {
   color: #1d4ed8;
   font-weight: 800;
 }
 
-.ai-flow-tag em {
-  color: #64748b;
-  font-style: normal;
-  font-weight: 700;
+.ai-flow-tag-s strong {
+  color: #166534;
+}
+
+.ai-flow-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  padding: 0.14rem 0.36rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ai-flow-pill-k {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.ai-flow-pill-s {
+  background: #dcfce7;
+  color: #166534;
 }
 
 .ai-bars-grid {
