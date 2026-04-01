@@ -6,6 +6,7 @@ project:
 
 website:
   title: "Skill Demand and Supply in Poland 2025"
+  site-url: "https://michal-palinski.github.io/skills-pl/"
 
 format:
   html:
@@ -31,6 +32,8 @@ resources:
   - data/regional_metrics.csv
   - data/regional_metrics_meta.json
   - data/pl_voivodeships.geojson
+  - assets/ai_regional_map_data.js
+  - assets/ai_report.js
   - assets/plotly.min.js
   - assets/regional_map_data.js
   - assets/report.js
