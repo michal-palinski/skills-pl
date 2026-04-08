@@ -1691,6 +1691,84 @@ h3 {
   font-size: 0.8rem;
 }
 
+.skill-cluster-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.28rem 0.72rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.skill-cluster-pill-default {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.skill-cluster-pill-ai-agent {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+.skill-cluster-pill-ai-ethics {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+.skill-cluster-pill-artificial-intelligence {
+  background: #ede9fe;
+  color: #6d28d9;
+  border-color: #c4b5fd;
+}
+
+.skill-cluster-pill-autonomous-driving {
+  background: #e0f2fe;
+  color: #0369a1;
+  border-color: #7dd3fc;
+}
+
+.skill-cluster-pill-generative-ai {
+  background: #fae8ff;
+  color: #a21caf;
+  border-color: #f0abfc;
+}
+
+.skill-cluster-pill-machine-learning {
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.skill-cluster-pill-nlp {
+  background: #fff7ed;
+  color: #c2410c;
+  border-color: #fdba74;
+}
+
+.skill-cluster-pill-neural-networks {
+  background: #ecfccb;
+  color: #4d7c0f;
+  border-color: #bef264;
+}
+
+.skill-cluster-pill-robotics {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fcd34d;
+}
+
+.skill-cluster-pill-vision {
+  background: #cffafe;
+  color: #0f766e;
+  border-color: #67e8f9;
+}
+
 .skill-modal-body p {
   margin: 0;
   color: #475569;

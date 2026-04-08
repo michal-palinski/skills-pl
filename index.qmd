@@ -434,7 +434,7 @@ classification and should therefore be treated as provisional pending
 expert verification. Use the search box or filters to narrow the list,
 or click a cluster card above to jump directly to that cluster. Within a
 cluster view, benchmark skills are shown first, followed by our newly
-classified skills in a different color. Click `View` to open the full
+classified skills in a different color. Click `Description` to open the full
 Lightcast description in a modal window.
 
 ```{=html}
