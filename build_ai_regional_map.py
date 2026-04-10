@@ -200,8 +200,8 @@ def load_lightcast_skill_meta() -> list[dict]:
     excel_meta = {
         row["skill_id"]: {
             "label": str(row.get("lightcast_name") or row.get("excel_skill_name") or row["skill_id"]).strip(),
-            "cluster": str(row.get("excel_ai_skill_cluster") or "").strip(),
-            "cluster_source": str(row.get("cluster_source") or "").strip(),
+            "primary_category": str(row.get("primary_category") or "").strip(),
+            "tags": str(row.get("tags") or "").strip(),
         }
         for _, row in workbook.iterrows()
     }
@@ -209,22 +209,16 @@ def load_lightcast_skill_meta() -> list[dict]:
     embeddings = np.load(EMBEDDINGS_NPZ, allow_pickle=True)
     skill_ids = [str(skill_id) for skill_id in embeddings["skill_ids"]]
     skill_names = [str(name) for name in embeddings["names"]]
-    wb_flags = [int(flag) for flag in embeddings["worldbank_ai_skill"]]
 
     ordered_meta = []
-    for skill_id, skill_name, wb_flag in zip(skill_ids, skill_names, wb_flags):
+    for skill_id, skill_name in zip(skill_ids, skill_names):
         row = excel_meta.get(skill_id, {})
-        cluster_source = row.get("cluster_source") or (
-            "Lightcast" if wb_flag else "embedding classification"
-        )
-        ordered_meta.append(
-            {
-                "skill_id": skill_id,
-                "label": row.get("label") or skill_name,
-                "cluster": row.get("cluster") or "",
-                "cluster_source": cluster_source,
-            }
-        )
+        ordered_meta.append({
+            "skill_id": skill_id,
+            "label": row.get("label") or skill_name,
+            "primary_category": row.get("primary_category") or "",
+            "tags": row.get("tags") or "",
+        })
     return ordered_meta
 
 
@@ -314,7 +308,7 @@ def compute_payload() -> dict:
 
     ai_offer_counts = Counter()
     skill_counts = defaultdict(Counter)
-    cluster_counts = defaultdict(Counter)
+    category_counts = defaultdict(Counter)
     total_ai_offers = 0
     mapped_ai_offers = 0
     unmapped_ai_offers = 0
@@ -345,8 +339,8 @@ def compute_payload() -> dict:
         ai_offer_counts[voiv] += 1
         skill_meta = lightcast_meta[int(skill_idx)]
         skill_counts[voiv][skill_meta["skill_id"]] += 1
-        if skill_meta["cluster"]:
-            cluster_counts[voiv][skill_meta["cluster"]] += 1
+        if skill_meta["primary_category"]:
+            category_counts[voiv][skill_meta["primary_category"]] += 1
 
     global_skill_counts = Counter()
     for voiv in VOIV_ORDER:
@@ -375,8 +369,7 @@ def compute_payload() -> dict:
                 {
                     "skill_id": skill_id,
                     "label": skill_meta["label"],
-                    "cluster": skill_meta["cluster"],
-                    "cluster_source": skill_meta["cluster_source"],
+                    "primary_category": skill_meta["primary_category"],
                     "count": count,
                     "g2": round(g2, 6),
                 }
@@ -385,18 +378,18 @@ def compute_payload() -> dict:
         scored.sort(key=lambda item: (-item["g2"], -item["count"], item["label"]))
         top_skills = scored[:5]
         top_skills_text = ", ".join(item["label"] for item in top_skills) if top_skills else "No AI skills detected"
-        top_clusters = [
+        top_categories = [
             {
-                "cluster": cluster,
-                "count": count,
-                "share_of_regional_ai_pct": round(count * 100 / region_ai_offers, 1)
+                "category": cat,
+                "count": cat_count,
+                "share_of_regional_ai_pct": round(cat_count * 100 / region_ai_offers, 1)
                 if region_ai_offers
                 else 0.0,
             }
-            for cluster, count in sorted(
-                cluster_counts[voiv].items(),
+            for cat, cat_count in sorted(
+                category_counts[voiv].items(),
                 key=lambda item: (-item[1], item[0]),
-            )[:5]
+            )[:4]
         ]
 
         ai_offers = ai_offer_counts[voiv]
@@ -409,7 +402,7 @@ def compute_payload() -> dict:
                 "ai_offers_per_100k_lf": round(ai_offers * 100000 / base["labour_force_2025_avg"], 2),
                 "ai_offer_share_pct": round(ai_offers * 100 / base["offers"], 2) if base["offers"] else 0.0,
                 "top_characteristic_skills": top_skills,
-                "top_clusters": top_clusters,
+                "top_categories": top_categories,
                 "top_characteristic_skills_text": top_skills_text,
             }
         )
